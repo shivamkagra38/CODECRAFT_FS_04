@@ -6,8 +6,8 @@ import HomePage from "./components/HomePage.js"
 import LoginPage from "./components/LoginPage.js";
 import ProfilePage from "./components/ProfilePage.js";
 
+//Background Image
 import bgImage from "url:./assets/bgImage.svg";
-console.log(bgImage);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -32,7 +32,7 @@ const routerConfig = createBrowserRouter([
 const App = () => {
 
     return(
-        <div>
+        <div style={ {backgroundImage: `url(${bgImage})`} } className="bg-cover bg-center">
             <RouterProvider router={routerConfig} />
         </div>
     );
