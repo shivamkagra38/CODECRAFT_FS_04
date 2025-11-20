@@ -7,6 +7,8 @@ import assets, {userDummyData} from "../assets/assets.js"
 
 const Sidebar = (props) => {
 
+    const{selectedUser, setSelectedUser} = props;
+
     const navigate = useNavigate();
 
   return (
@@ -51,7 +53,7 @@ const Sidebar = (props) => {
 
                         return ( 
 
-                            <div key={idx} className={`relative flex items-center gap-2 p-2 rounded cursor-pointer max-sm:text-xs`}>
+                            <div onClick={()=>{setSelectedUser(user)}} key={idx} className={`relative flex items-center gap-2 p-2 rounded cursor-pointer max-sm:text-xs ${selectedUser == user  ? "bg-[#282142]/30 shadow-lg shadow-violet-300/30" : "bg-transparent"}`}>
                                 <img src={user?.profilePic || assets.avatar_icon } className="rounded-full aspect-square w-[35px]" />
                                 <div className="flex flex-col leading-5">
                                     <p>{user.fullName}</p>
