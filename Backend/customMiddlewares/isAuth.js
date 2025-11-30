@@ -21,7 +21,9 @@ const isAuth = async (req, res , next) => {
     }
     catch(error)
     {
-        req.status(400).json({success:false, message:"User not authenticated"});
+        res.status(400).json({success:false, message:"User not authenticated"});
         console.log("Error while authenticating user");
     }
 }
+
+module.exports = isAuth;

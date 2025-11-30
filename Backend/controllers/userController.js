@@ -1,21 +1,22 @@
 const userModel = require("../models/UserModel.js");
 const bcryptjs = require("bcryptjs");
 const generateToken = require("../lib/utils.js");
+const cloudinary = require("../lib/cloudinary.js");
 
 //Sign up 
 const signUp = async (req, res) => {
 
-    const{fullname, email, password, bio} = {fullname:"chat",email:"chat@gmail.com", password:"chat",bio:"hello"};
+    const{fullname, email, password, bio} = req.body;
 
     try
     {
-        if(!fullname || !email || !password || OrderedBulkOperation)
+        if(!fullname || !email || !password || !bio)
         {
             res.status(401).json({success:false, message:"missing details"});
             return;
         }
 
-        const user = userModel.findOne({email});
+        const user = await userModel.findOne({email});
 
         if(user)
         {
@@ -76,4 +77,34 @@ const checkAuth = (req, res) => {
     req.status(200).json({success:true, message:"Authentication Successful", user:req.user});
 }
 
-module.exports = {signUp, login};
+//User profile
+const updateProfile = async (req, res) => {
+
+    try
+    {
+        const {profilePic, bio, fullname} = req.body;
+        const userId = req.user._id;
+
+        let updatedUser;
+
+        if(!profilePic)
+        {
+           updatedUser =  await userModel.findByIdAndUpdate(userId, {bio,fullname}, {new:true});
+        }
+        else
+        {
+            const upload = await cloudinary.uploader.upload(profilePic);
+            updatedUser =  await userModel.findByIdAndUpdate(userId, {profilePic:upload.secure_url,bio,fullName}, {new:true});
+        }
+
+        res.status(200).json({success:true, message:"Profile updated successfully", user:updatedUser});
+    }
+    catch(error)
+    {
+        console.log("Error while updating profile ");
+        res.status(400).json({success:false, message:"Error while updating profile"});
+    }
+
+}
+
+module.exports = {signUp, login, updateProfile, checkAuth};
