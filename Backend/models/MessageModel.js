@@ -4,12 +4,12 @@ const messageSchema = new mongoose.Schema({
 
     senderId : {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"User",
+        ref:"users",
         required:true
     },
     receiverId : {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"User",
+        ref:"users",
         required:true
     },
     text:{
@@ -25,4 +25,6 @@ const messageSchema = new mongoose.Schema({
 
 },{timestamps:true});
 
-const message = mongoose.model("message", messageSchema);
+const messages = mongoose.model("messages", messageSchema);
+
+module.exports = messages;
