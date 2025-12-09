@@ -1,19 +1,49 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import assets from '../assets/assets.js';
-import {useNavigate} from "react-router"
+import {Navigate, useNavigate} from "react-router"
+import { AuthContext } from '../../context/AuthContext.js';
 
 const ProfilePage = () => {
 
+  const {authUser, updateProfile} = useContext(AuthContext);
+
+  if(!authUser)
+  {
+    return(
+      <Navigate to="/login"/>
+    )
+  }
+
   const[selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
-  const [name , setName] = useState("Shivam Kagra");
-  const [bio, setBio] = useState("Hello ! I am a MERN developer");
+  const [name , setName] = useState(authUser.fullname);
+  const [bio, setBio] = useState(authUser.bio);
 
   const submitHandler = async (e) => {
 
     e.preventDefault();
-    navigate("/");
+    if(!selectedImage)
+    {
+      try
+      {
+        await updateProfile({fullname:name, bio});
+        navigate("/");
+        return;
+      }
+      catch(error)
+      {
+        console.log("failed");
+      }
+    }
 
+    //Covert Image to base64
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedImage);
+    reader.onload = async () => {
+      const base64Image = reader.result;
+      await updateProfile({profilePic:base64Image, fullname:name, bio});
+      navigate("/");
+    }
   }
 
   return (

@@ -1,15 +1,28 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import assets from '../assets/assets'
+import { AuthContext } from '../../context/AuthContext';
+import { Navigate } from 'react-router';
 
 const LoginPage = () => {
 
   const[currState, setCurrState] = useState("Sign up");
-  const[fullName, setFullName] = useState("");
+  const[fullname, setFullName] = useState("");
   const[email, setEmail] = useState("");
   const[password, setPassword] = useState("");
   const[bio, setBio] = useState("");
 
   const[isDataSubmitted, setIsDataSubmitted] = useState(false);
+
+
+  const {login, authUser} = useContext(AuthContext);
+
+  if(authUser)
+  {
+    return(
+      <Navigate to="/" />
+    )
+  }
+
 
   const SubmitHandler = (e) => {
 
@@ -21,7 +34,7 @@ const LoginPage = () => {
       return;
     }
 
-
+    login(currState === "Sign up" ? "signup" : "login", {fullname, email, password, bio})
 
   }
 
@@ -40,7 +53,7 @@ const LoginPage = () => {
       </div>
       {
         currState === "Sign up" && !isDataSubmitted && 
-        <input value={fullName} onChange={(e)=>{setFullName(e.target.value)}} type="text" placeholder="Full Name" className=" outline-0 border-b border-gray-500 focus:ring-1 focus:ring-indigo-200 p-1"></input>
+        <input value={fullname} onChange={(e)=>{setFullName(e.target.value)}} type="text" placeholder="Full Name" className=" outline-0 border-b border-gray-500 focus:ring-1 focus:ring-indigo-200 p-1"></input>
       }
       {
         !isDataSubmitted && 

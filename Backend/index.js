@@ -70,7 +70,7 @@ app.get("/check", isAuth, userControllers.checkAuth);
 
 //Messages routes
 app.get("/users", isAuth, messageControllers.getUsersForSidebar);
-app.get("/:id", isAuth, messageControllers.selectedUserMessages);
+app.get("/messages/:id", isAuth, messageControllers.selectedUserMessages);
 app.put("/mark/:id", isAuth, messageControllers.markMessageAsSeen);
 app.post("/send/:id", isAuth, messageControllers.sendMessage);
 

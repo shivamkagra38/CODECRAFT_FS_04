@@ -28,7 +28,7 @@ const signUp = async (req, res) => {
 
         const token = generateToken(newUser._id);
 
-        res.status(200).json({success:true, message:"Sign up Successful", newUser, token});
+        res.status(200).json({success:true, message:"Sign up Successful", user:newUser, token});
 
     }
     catch(error)
@@ -62,7 +62,7 @@ const login = async (req, res) => {
 
         const token = generateToken(current_user._id);
 
-        res.status(200).json({success:true, message:"login Successful", current_user, token});
+        res.status(200).json({success:true, message:"login Successful", user:current_user, token});
     }
     catch(error)
     {
@@ -74,7 +74,7 @@ const login = async (req, res) => {
 
 //Authentication checking controller
 const checkAuth = (req, res) => {
-    req.status(200).json({success:true, message:"Authentication Successful", user:req.user});
+    res.status(200).json({success:true, message:"Authentication Successful", user:req.user});
 }
 
 //User profile
