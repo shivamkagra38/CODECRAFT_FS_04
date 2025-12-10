@@ -77,7 +77,7 @@ export const ChatProvider = (props) => {
 
     }
 
-    //function to subscribe to messages for selected uset
+    //function to subscribe to messages for selected user
     const subscribeToMessages = async () => {
 
         if(!socket)
@@ -85,7 +85,7 @@ export const ChatProvider = (props) => {
             return;
         }
 
-        socket.on("newMessage", (newMessage)=>{
+        socket.on("newMessage", async (newMessage)=>{
 
             if(selectedUser && newMessage.senderId === selectedUser._id)
             {
@@ -96,11 +96,14 @@ export const ChatProvider = (props) => {
                 
                 try
                 {
-                    axios.put(`${backendUrl}/mark/${newMessage._id}`,{}, {headers:{token}});
+                    await axios.put(`${backendUrl}/mark/${newMessage._id}`,{}, {headers:{token}});
+                    const obj = {...unseenMessages};
+                    delete obj[newMessage.senderId]
+                    setUnseenMessages(obj);
                 }
                 catch(error)
                 {
-
+                    console.log("Error while marking message");
                 }
 
             }
@@ -108,7 +111,7 @@ export const ChatProvider = (props) => {
             {
                 setUnseenMessages( (prev)=> {
 
-                    return {...prev, [newMessage.senderId]:  prev[newMessage.senderId] ? prev[newMessage.senderId] + 1 : 1 }
+                    return {...prev, [newMessage.senderId]: prev[newMessage.senderId] ? prev[newMessage.senderId] + 1 : 1 }
 
                 } );
             }

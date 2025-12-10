@@ -73,7 +73,7 @@ const markMessageAsSeen = async (req, res) => {
     
     try
     {
-        const messageId = req.params;
+        const messageId = req.params.id;
 
         await messageModel.findByIdAndUpdate({_id:messageId},{seen:true});
 
@@ -96,15 +96,13 @@ const sendMessage = async (req, res) => {
 
         const {messageData} = req.body;
 
-        console.log(messageData);
+        let imageUrl = "";
 
-        let imageUrl = "no";
-
-        // if(messageData.image !== "")
-        // {
-        //     const uploadResponse = await cloudinary.uploader.upload(image);
-        //     imageUrl = uploadResponse.secure_url;
-        // }
+        if(messageData.image !== "")
+        {
+            const uploadResponse = await cloudinary.uploader.upload(image);
+            imageUrl = uploadResponse.secure_url;
+        }
 
         const newMessage = await messageModel.create({
             senderId: myId,
@@ -113,7 +111,7 @@ const sendMessage = async (req, res) => {
             image: imageUrl
         });
 
-        console.log(userSocketMap);
+        //console.log(userSocketMap);
 
         //Emit the new message to the receiver's socket
         const receiverSocketId = userSocketMap[receiverId];

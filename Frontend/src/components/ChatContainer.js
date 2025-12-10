@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 
 const ChatContainer = (props) => {
 
-  const{selectedUser, messages, sendMessages, getMessages} = useContext(ChatContext);
+  const{selectedUser, setSelectedUser,messages, sendMessages, getMessages} = useContext(ChatContext);
   const {authUser, onlineUsers} = useContext(AuthContext);
 
   const scrollEnd = useRef();
@@ -79,7 +79,7 @@ const ChatContainer = (props) => {
           {selectedUser.fullname}
           {onlineUsers.includes(selectedUser._id) ? <span className="w-2 h-2 rounded-full bg-green-500"></span> :""}
          </p>
-         <img onClick={()=>{setSelectedUser(false)}} src={assets.arrow_icon} className="md:hidden max-w-5"></img>
+         <img onClick={()=>{setSelectedUser(null)}} src={assets.arrow_icon} className="md:hidden max-w-5"></img>
          <img src={assets.help_icon} className=" cursor-pointer max-md:hidden max-w-5"></img>
       </div>
       {/* Header */}
@@ -132,7 +132,7 @@ const ChatContainer = (props) => {
 
     </div>
   ) : (
-    <div className='flex-1 flex items-center justify-center flex-col gap-3 max-md:hidden bg-white/10'>
+    <div className='flex-1 flex items-center justify-center flex-col gap-3 bg-white/10'>
       <img src={assets.logo_icon} className='max-w-16'></img>
       <p className="text-md font-medium text-white"> Welcome to Pingo !</p>
     </div>

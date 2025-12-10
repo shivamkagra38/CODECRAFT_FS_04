@@ -26,7 +26,7 @@ const Sidebar = (props) => {
 
   return (
 
-    <div className={'bg-[#818582]/20 h-full p-5 rounded-r-xl overflow-y-scroll text-white max-md:hidden'}>
+    <div className= {`bg-[#818582]/20 h-full p-5 rounded-r-xl overflow-y-scroll text-white` + (selectedUser ? " max-md:hidden" : "")}> {/* max-md:hidden */ }
 
         
         <div className="pb-5">
@@ -66,7 +66,7 @@ const Sidebar = (props) => {
 
                         return ( 
 
-                            <div onClick={()=>{setSelectedUser(user)}} key={idx} className={`relative flex items-center gap-2 p-2 rounded cursor-pointer max-sm:text-xs ${selectedUser == user  ? "bg-[#282142]/30 shadow-lg shadow-violet-300/30" : "bg-transparent"}`}>
+                            <div onClick={()=>{setSelectedUser(user); setUnseenMessages( {...unseenMessages, [user._id] : 0}) }} key={idx} className={`relative flex items-center gap-2 p-2 rounded cursor-pointer max-sm:text-xs ${selectedUser == user  ? "bg-[#282142]/30 shadow-lg shadow-violet-300/30" : "bg-transparent"}`}>
                                 <img src={user?.profilePic || assets.avatar_icon } className="rounded-full aspect-square w-[35px]" />
                                 <div className="flex flex-col leading-5">
                                     <p>{user.fullname}</p>
@@ -77,7 +77,7 @@ const Sidebar = (props) => {
                                 </div>
                                {
                                   unseenMessages[user._id] ?
-                                 <p className="absolute right-1 text-xs h-5 w-5 flex justify-center items-center rounded-full bg-violet-500/50">{idx}</p>
+                                 <p className="absolute right-1 text-xs h-5 w-5 flex justify-center items-center rounded-full bg-violet-500/50">{unseenMessages[user._id]}</p>
                                 : ""
                                }
                             </div>

@@ -9,7 +9,7 @@ const socket = require("socket.io");
 const socketServer = socket.Server;
 
 const userControllers = require("./controllers/userController.js");
-const messageControllers = require("./controllers/messageController.js");
+
 const isAuth = require("./customMiddlewares/isAuth.js");
 
 dotenv.config({});
@@ -49,6 +49,7 @@ io.on("connection", (socket) => {
 
 });
 
+module.exports = {io, userSocketMap}
 
 //Middlewares
 app.use(express.json({limit: "4mb"}));
@@ -67,6 +68,7 @@ app.put("/update-profile", isAuth, userControllers.updateProfile);
 app.get("/check", isAuth, userControllers.checkAuth);
 
 //Messages routes
+const messageControllers = require("./controllers/messageController.js");
 app.get("/users", isAuth, messageControllers.getUsersForSidebar);
 app.get("/messages/:id", isAuth, messageControllers.selectedUserMessages);
 app.put("/mark/:id", isAuth, messageControllers.markMessageAsSeen);
@@ -77,4 +79,3 @@ server.listen(PORT, ()=>{
     console.log(`Server is running on port ${PORT}`);
 });
 
-module.exports = {io, userSocketMap}
