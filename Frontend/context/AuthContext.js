@@ -60,7 +60,7 @@ export const AuthProvider = (props) => {
         }
         catch(error)
         {
-            console.log(error);
+            console.log("User Not Logged In");
             toast.error("User Not Logged In !");
         }
 

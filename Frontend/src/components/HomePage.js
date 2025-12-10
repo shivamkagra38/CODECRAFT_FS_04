@@ -7,7 +7,6 @@ import { Navigate } from 'react-router'
 
 const HomePage = () => {
 
-  const[selectedUser, setSelectedUser] = useState(false);
   const {authUser} = useContext(AuthContext);
 
   return authUser ? (

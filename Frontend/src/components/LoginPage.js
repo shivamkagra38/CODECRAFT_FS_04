@@ -13,7 +13,6 @@ const LoginPage = () => {
 
   const[isDataSubmitted, setIsDataSubmitted] = useState(false);
 
-
   const {login, authUser} = useContext(AuthContext);
 
   if(authUser)

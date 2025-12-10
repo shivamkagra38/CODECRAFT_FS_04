@@ -19,7 +19,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 const routerConfig = createBrowserRouter([
     {
         path : "/",
-        element : <HomePage/>,
+        element : <HomePage />,
         errorElement : "Invalid URL"
     },
     {
