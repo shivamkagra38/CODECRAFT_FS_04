@@ -145,7 +145,8 @@ export const ChatProvider = (props) => {
         sendMessages,
         setSelectedUser,
         unseenMessages,
-        setUnseenMessages
+        setUnseenMessages,
+        getMessages
     };
 
     return(

@@ -2,7 +2,7 @@ const userModel = require("../models/UserModel.js");
 const messageModel = require("../models/MessageModel.js");
 
 const cloudinary = require("../lib/cloudinary.js");
-const {io, userSocketMap} = require("../index.js");
+const {io,userSocketMap} = require("../index.js");
 
 //Get all users except the loggin in user
 const getUsersForSidebar = async (req, res) => {
@@ -86,7 +86,6 @@ const markMessageAsSeen = async (req, res) => {
     }
 }
 
-
 //Sending Message to a selected User API
 const sendMessage = async (req, res) => {
 
@@ -95,22 +94,26 @@ const sendMessage = async (req, res) => {
         const myId = req.user._id;
         const receiverId = req.params.id;
 
-        const {text, image} = req.body;
+        const {messageData} = req.body;
 
-        let imageUrl = "";
+        console.log(messageData);
 
-        if(image)
-        {
-            const uploadResponse = await cloudinary.uploader.upload(image);
-            imageUrl = uploadResponse.secure_url;
-        }
+        let imageUrl = "no";
+
+        // if(messageData.image !== "")
+        // {
+        //     const uploadResponse = await cloudinary.uploader.upload(image);
+        //     imageUrl = uploadResponse.secure_url;
+        // }
 
         const newMessage = await messageModel.create({
             senderId: myId,
             receiverId,
-            text,
+            text: messageData.text,
             image: imageUrl
         });
+
+        console.log(userSocketMap);
 
         //Emit the new message to the receiver's socket
         const receiverSocketId = userSocketMap[receiverId];
@@ -125,7 +128,8 @@ const sendMessage = async (req, res) => {
     }
     catch(error)
     {
-
+        res.status(400).json("Error while sending a message");
+        console.log("Error while sening a message");
     }
 
 }

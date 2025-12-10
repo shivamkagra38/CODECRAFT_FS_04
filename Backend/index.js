@@ -8,14 +8,12 @@ const connectDB = require("./lib/db.js");
 const socket = require("socket.io");
 const socketServer = socket.Server;
 
-
 const userControllers = require("./controllers/userController.js");
 const messageControllers = require("./controllers/messageController.js");
 const isAuth = require("./customMiddlewares/isAuth.js");
 
 dotenv.config({});
 connectDB();
-
 
 const app = express();
 const server = http.createServer(app);
@@ -33,7 +31,7 @@ const userSocketMap = {/*userId : socketId*/}
 io.on("connection", (socket) => {
 
     const userId = socket.handshake.query.userId;
-    console.log("user Connected ", userId);
+    console.log("user Connected-", userId);
 
     if(userId)
     {
