@@ -26,7 +26,7 @@ const Sidebar = (props) => {
 
   return (
 
-    <div className= {`bg-[#818582]/20 h-full p-5 rounded-r-xl overflow-y-scroll text-white` + (selectedUser ? " max-md:hidden" : "")}> {/* max-md:hidden */ }
+    <div className= {`bg-[#818582]/20 h-full p-5 rounded-r-xl overflow-y-scroll text-white max-sm:w-full` + (selectedUser ? " max-md:hidden" : "")}> {/* max-md:hidden */ }
 
         
         <div className="pb-5">

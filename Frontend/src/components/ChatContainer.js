@@ -132,7 +132,7 @@ const ChatContainer = (props) => {
 
     </div>
   ) : (
-    <div className='flex-1 flex items-center justify-center flex-col gap-3 bg-white/10'>
+    <div className='flex-1 flex items-center justify-center flex-col gap-3 max-sm:hidden bg-white/10'>
       <img src={assets.logo_icon} className='max-w-16'></img>
       <p className="text-md font-medium text-white"> Welcome to Pingo !</p>
     </div>
