@@ -18,6 +18,8 @@ const Sidebar = (props) => {
 
     const navigate = useNavigate();
 
+    const[open, setOpen] = useState(false);
+
     useEffect(()=>{
 
         getUsers();
@@ -35,13 +37,14 @@ const Sidebar = (props) => {
 
                 <img src={logo} className="max-w-35"></img>
 
-                <div className="relative py-2 group">
+                <div className="relative py-2 group" onClick={()=>{console.log("group 1");setOpen(!open)}}>
 
                     <img src={menu_icon} className="max-h-4 cursor-pointer" />
 
-                    <div className="absolute top-full right-0 z-20 w-32 p-5 rounded-md
-                    bg-[#282142] border border-gray-600 text-gray-100 hidden group-hover:block">
+                    <div className={`absolute top-full right-0 z-20 w-32 p-5 rounded-md
+                    bg-[#282142] border border-gray-600 text-gray-100 ` + (open ? "block" : "hidden") }>
 
+                        <span className='absolute top-1 right-2 text-red-600 font-light text-sm cursor-pointer' onClick={()=>{console.log("group 2");setOpen(!open)}}>X</span>
                         <p onClick={()=>{navigate("/profile")}} className="cursor-pointer text-sm">Edit Profile</p>
                         <hr className="border border-gray-600 my-1" />
                         <p className="cursor-pointer text-sm" onClick={()=>{logout()}}>Logout</p>
