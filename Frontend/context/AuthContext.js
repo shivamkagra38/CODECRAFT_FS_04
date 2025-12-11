@@ -3,6 +3,7 @@ import { backendUrl } from "../backendUrl";
 import axios from "axios";
 import toast from "react-hot-toast";
 import {io} from "socket.io-client"
+import {useNavigate } from "react-router";
 
 export const AuthContext = createContext();
 axios.defaults.baseURL = backendUrl;
@@ -110,6 +111,7 @@ export const AuthProvider = (props) => {
             {
                 setAuthUser(data?.data?.user);
                 toast.success("Profile Updated !");
+                return true;
             }
 
         }
@@ -117,6 +119,7 @@ export const AuthProvider = (props) => {
         {
             console.log("Update profile error");
             toast.error("Error While Updating Profile");
+            return false;
         }
 
     }

@@ -85,6 +85,8 @@ const updateProfile = async (req, res) => {
         const {profilePic, bio, fullname} = req.body;
         const userId = req.user._id;
 
+        //console.log(req.body);
+
         let updatedUser;
 
         if(!profilePic)
@@ -94,14 +96,13 @@ const updateProfile = async (req, res) => {
         else
         {
             const upload = await cloudinary.uploader.upload(profilePic);
-            updatedUser =  await userModel.findByIdAndUpdate(userId, {profilePic:upload.secure_url,bio,fullName}, {new:true});
+            updatedUser =  await userModel.findByIdAndUpdate(userId, {profilePic:upload.secure_url,bio,fullname}, {new:true});
         }
-
         res.status(200).json({success:true, message:"Profile updated successfully", user:updatedUser});
     }
     catch(error)
     {
-        console.log("Error while updating profile ");
+        console.log(error);
         res.status(400).json({success:false, message:"Error while updating profile"});
     }
 

@@ -74,7 +74,7 @@ const ChatContainer = (props) => {
 
       {/* Header */}
       <div className="flex items-center gap-3 py-3 mx-3 border-b border-stone-500">
-        <img src={selectedUser.profilePic?"":assets.avatar_icon} alt="profilePic" className="w-8 rounded-full"></img>
+        <img src={selectedUser.profilePic?selectedUser.profilePic:assets.avatar_icon} alt="profilePic" className="w-8 rounded-full"></img>
          <p className="text-white flex-1 text-shadow-md flex items-center gap-2">
           {selectedUser.fullname}
           {onlineUsers.includes(selectedUser._id) ? <span className="w-2 h-2 rounded-full bg-green-500"></span> :""}
@@ -103,7 +103,10 @@ const ChatContainer = (props) => {
               } 
 
               <div className='text-xs' >
-                <img src={message.senderId == authUser._id ? assets.avatar_icon : assets.profile_martin} className="w-7 rounded-full"></img>
+                {message.senderId == authUser._id ? <img src={!authUser.profilePic ? assets.avatar_icon : authUser.profilePic} className="w-7 rounded-full"></img> :
+                
+                <img src={!selectedUser.profilePic ? assets.avatar_icon : selectedUser.profilePic} className="w-7 rounded-full"></img> }
+
                 <p className="text-gray-500">{formatMessageTime(message.createdAt)}</p>
               </div>
 

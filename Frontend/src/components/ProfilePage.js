@@ -24,15 +24,12 @@ const ProfilePage = () => {
     e.preventDefault();
     if(!selectedImage)
     {
-      try
+      const res = await updateProfile({fullname:name, bio});
+      if(res)
       {
-        await updateProfile({fullname:name, bio});
+        setSelectedImage(null);
         navigate("/");
         return;
-      }
-      catch(error)
-      {
-        console.log("failed");
       }
     }
 
@@ -41,8 +38,12 @@ const ProfilePage = () => {
     reader.readAsDataURL(selectedImage);
     reader.onload = async () => {
       const base64Image = reader.result;
-      await updateProfile({profilePic:base64Image, fullname:name, bio});
-      navigate("/");
+      const res = await updateProfile({profilePic:base64Image, fullname:name, bio});
+      if(res)
+      {
+        navigate("/");
+        return;
+      }
     }
   }
 
@@ -57,7 +58,7 @@ const ProfilePage = () => {
 
           <label htmlFor="avtar" className="flex items-center gap-3 cursor pointer">
             <input onChange={(e)=>{setSelectedImage(e.target.files[0])}} type="file" id="avtar" accept='.jpg, .png, .jpeg' hidden></input>
-            <img src={selectedImage ? URL.createObjectURL(selectedImage) : assets.avatar_icon} className={`w-12 h-12 ${selectedImage && 'rounded-full'}`}></img>
+            {!selectedImage ? <img src={ authUser.profilePic ? authUser.profilePic : assets.avatar_icon} className="w-12 h-12 rounded-full"></img> : <img src={ URL.createObjectURL(selectedImage)} className={`w-12 h-12 ${selectedImage && 'rounded-full'}`}></img>}
             Upload Profile Picture
           </label>
 

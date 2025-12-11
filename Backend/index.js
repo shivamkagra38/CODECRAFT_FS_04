@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+dotenv.config({});
 const http = require('http');
 const cors = require("cors");
 const connectDB = require("./lib/db.js");
@@ -12,7 +13,6 @@ const userControllers = require("./controllers/userController.js");
 
 const isAuth = require("./customMiddlewares/isAuth.js");
 
-dotenv.config({});
 connectDB();
 
 const app = express();
